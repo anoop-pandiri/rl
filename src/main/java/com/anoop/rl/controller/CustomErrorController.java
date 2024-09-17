@@ -1,4 +1,4 @@
-package com.anoop.rl.controllers;
+package com.anoop.rl.controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
