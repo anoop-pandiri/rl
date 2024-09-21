@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: rl
+
+  datasource:
+    driverClassName: org.h2.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+
+springdoc:
+  api-docs:
+    path: /swagger-ui/api-docs
+  swagger-ui:
+    path: /swagger-ui/index.html
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}

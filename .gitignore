@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Maven Wrapper
+.mvn/
+
+#db file
+data
+
+#.env file
+.env
