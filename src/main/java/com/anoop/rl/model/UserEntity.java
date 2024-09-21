@@ -25,19 +25,24 @@ public class UserEntity implements UserDetails{
     @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "username", nullable = false, unique = true)
+    @NotNull(message = "Username cannot be null")
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column(name="password",nullable = false)
+    @Column(name="password", nullable = false)
+    @NotNull(message = "Password cannot be null")
     private String password;
 
     @Email
-    @Column(name="email")
+    @NotNull(message = "Email cannot be null")
+    @Column(name="email", unique = true, nullable = false)
     private String email;
 
     @Column(name = "phone", unique = true, nullable = true)
-    private Integer phone;
+    @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$", message = "Invalid phone number")
+    private String phone;
 
+    @NotNull(message = "Role cannot be null")
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private Role role;
@@ -46,15 +51,14 @@ public class UserEntity implements UserDetails{
         return role;
     }
 
-    public void setRole(Role role){
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
 
-    @Column(name = "last_login")
+    @Column(name = "last_login", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Timestamp lastLogin;
 
     @Override
@@ -81,7 +85,6 @@ public class UserEntity implements UserDetails{
     public boolean isAccountNonExpired(){
         return true;
     }
-
 
     // Getters and setters
 }
