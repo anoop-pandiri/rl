@@ -25,7 +25,6 @@ public class JwtService {
 
     public JwtService(Dotenv dotenv) {
         this.SECRET_KEY = dotenv.get("JWT_SECRET_KEY");
-        //this.SECRET_KEY ="b8739d66c52d1969c583b49fae82fcf4ea9f72e97d22f1304dc5a90dd02d94da";
     }
 
     public String extractUsername(String token){
