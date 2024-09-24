@@ -1,6 +1,5 @@
 package com.anoop.rl.config.jwt;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +22,8 @@ public class JwtService {
 
     private final String SECRET_KEY;
 
-    public JwtService(Dotenv dotenv) {
-        this.SECRET_KEY = dotenv.get("JWT_SECRET_KEY");
+    public JwtService(@Value("${JWT_SECRET_KEY}") String secretKey) {
+        this.SECRET_KEY = secretKey;
     }
 
     public String extractUsername(String token){
