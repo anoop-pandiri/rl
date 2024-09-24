@@ -36,6 +36,7 @@ public class AuthenticationService {
     public String register(UserEntity request){
         boolean usernameExists = repository.existsByUsername(request.getUsername());
         boolean emailExists = repository.existsByEmail(request.getEmail());
+        boolean phoneExists = repository.existsByPhone(request.getPhone());
         
         if (usernameExists && emailExists) {
         throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Username and email already exist");
@@ -43,6 +44,9 @@ public class AuthenticationService {
         throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Username already exists");
     } else if (emailExists) {
         throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Email already exists");
+    }
+    else if(phoneExists){
+        throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Phone already exists");
     }
   
         try{

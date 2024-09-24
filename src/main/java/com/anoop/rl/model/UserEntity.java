@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.anoop.rl.model.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 import jakarta.validation.constraints.*;
@@ -62,6 +63,7 @@ public class UserEntity implements UserDetails{
     private Timestamp lastLogin;
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
