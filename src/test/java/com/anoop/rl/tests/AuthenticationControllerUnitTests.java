@@ -203,7 +203,7 @@ public class AuthenticationControllerUnitTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errorMessage").value("ILL - Please enter Username!"));
+                .andExpect(jsonPath("$.errorMessage").value("ILL - Enter Username"));
     }
 
     @Test
@@ -215,7 +215,7 @@ public class AuthenticationControllerUnitTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errorMessage").value("ILL - Please enter Password!"));
+                .andExpect(jsonPath("$.errorMessage").value("ILL - Enter Password"));
     }
 
 }

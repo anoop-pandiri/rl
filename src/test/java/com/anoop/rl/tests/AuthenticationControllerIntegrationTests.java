@@ -67,6 +67,33 @@ public class AuthenticationControllerIntegrationTests {
     }
 
     @Test
+    public void register_ConflictUsernameEmailPhone_Conflict() throws Exception {
+        // Arrange: Create a user and save it in the database to cause a conflict
+        UserEntity existingUser = new UserEntity();
+        existingUser.setUsername("testuser");
+        existingUser.setPassword(passwordEncoder.encode("password123"));
+        existingUser.setEmail("testuser@email.com");
+        existingUser.setPhone("+919660661696");
+        existingUser.setRole(Role.USER);
+        userRepository.save(existingUser);
+
+        // Create a new user with the same username and email
+        UserEntity newUser = new UserEntity();
+        newUser.setUsername("testuser");
+        newUser.setPassword("newpassword123");
+        newUser.setEmail("testuser@email.com");
+        newUser.setPhone("+919660661696");
+        newUser.setRole(Role.USER);
+
+        // Act: Perform POST request to /register, expecting conflict
+        mockMvc.perform(post("/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newUser)))
+                .andExpect(status().isConflict()) // Assert: Expect conflict (409)
+                .andExpect(jsonPath("$.errorMessage").value("CON - Username, email and phone already exists"));
+    }
+
+    @Test
     public void register_ConflictUsernameAndEmail_Conflict() throws Exception {
         // Arrange: Create a user and save it in the database to cause a conflict
         UserEntity existingUser = new UserEntity();
@@ -88,7 +115,61 @@ public class AuthenticationControllerIntegrationTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(newUser)))
                 .andExpect(status().isConflict()) // Assert: Expect conflict (409)
-                .andExpect(jsonPath("$.errorMessage").value("CON - Username and email already exist"));
+                .andExpect(jsonPath("$.errorMessage").value("CON - Username and email already exists"));
+    }
+
+    @Test
+    public void register_ConflictUsernameAndPhone_Conflict() throws Exception {
+        // Arrange: Create a user and save it in the database to cause a conflict
+        UserEntity existingUser = new UserEntity();
+        existingUser.setUsername("testuser");
+        existingUser.setPassword(passwordEncoder.encode("password123"));
+        existingUser.setEmail("testuser@email.com");
+        existingUser.setPhone("+919660661696");
+        existingUser.setRole(Role.USER);
+        userRepository.save(existingUser);
+
+        // Create a new user with the same username and email
+        UserEntity newUser = new UserEntity();
+        newUser.setUsername("testuser");
+        newUser.setPassword("newpassword123");
+        newUser.setEmail("testuser2@email.com");
+        newUser.setPhone("+919660661696");
+        newUser.setRole(Role.USER);
+
+        // Act: Perform POST request to /register, expecting conflict
+        mockMvc.perform(post("/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newUser)))
+                .andExpect(status().isConflict()) // Assert: Expect conflict (409)
+                .andExpect(jsonPath("$.errorMessage").value("CON - Username and phone already exists"));
+    }
+
+    @Test
+    public void register_ConflictEmailAndPhone_Conflict() throws Exception {
+        // Arrange: Create a user and save it in the database to cause a conflict
+        UserEntity existingUser = new UserEntity();
+        existingUser.setUsername("testuser");
+        existingUser.setPassword(passwordEncoder.encode("password123"));
+        existingUser.setEmail("testuser@email.com");
+        existingUser.setPhone("+919660661696");
+        existingUser.setRole(Role.USER);
+        userRepository.save(existingUser);
+
+        // Create a new user with the same username and email
+        UserEntity newUser = new UserEntity();
+        newUser.setUsername("testuser2");
+        newUser.setPassword("newpassword123");
+        newUser.setEmail("testuser@email.com");
+        newUser.setPhone("+919660661696");
+        newUser.setRole(Role.USER);
+
+        // Act: Perform POST request to /register, expecting conflict
+        mockMvc.perform(post("/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newUser)))
+                .andExpect(status().isConflict()) // Assert: Expect conflict (409)
+                .andExpect(jsonPath("$.errorMessage").value("CON - Email and phone already exists"));
     }
 
     @Test

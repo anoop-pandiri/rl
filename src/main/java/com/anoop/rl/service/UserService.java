@@ -12,7 +12,6 @@ public interface UserService {
     List<UserEntity> getAllUsers();
     Optional<UserEntity> getUserById(Integer id);
     ResponseEntity<UserEntity> getUserByUsername(String username);
-    ResponseEntity<ApiResponse> createUser(UserEntity user);
     ResponseEntity<UserEntity> updateUser(Integer userId, UserEntity user);
     ResponseEntity<ApiResponse> deleteUser(Integer userId);
 }

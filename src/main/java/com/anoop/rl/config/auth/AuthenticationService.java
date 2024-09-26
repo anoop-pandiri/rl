@@ -36,18 +36,30 @@ public class AuthenticationService {
     public String register(UserEntity request){
         boolean usernameExists = repository.existsByUsername(request.getUsername());
         boolean emailExists = repository.existsByEmail(request.getEmail());
-        boolean phoneExists = repository.existsByPhone(request.getPhone());
-        
-        if (usernameExists && emailExists) {
-        throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Username and email already exist");
-    } else if (usernameExists) {
-        throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Username already exists");
-    } else if (emailExists) {
-        throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Email already exists");
-    }
-    else if(phoneExists){
-        throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Phone already exists");
-    }
+        boolean phoneExists;
+        if(request.getPhone() == null) {
+            phoneExists = false;
+        }
+        else {
+            phoneExists = repository.existsByPhone(request.getPhone());
+        }
+        if (usernameExists && emailExists && phoneExists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Username, email and phone already exists");
+        }
+        else if (usernameExists && emailExists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Username and email already exists");
+        }else if (phoneExists && emailExists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Email and phone already exists");
+        }else if (usernameExists && phoneExists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Username and phone already exists");
+        } else if (usernameExists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Username already exists");
+        } else if (emailExists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Email already exists");
+        }
+        else if(phoneExists) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "CON - " + "Phone already exists");
+        }
   
         try{
         UserEntity user = new UserEntity();
