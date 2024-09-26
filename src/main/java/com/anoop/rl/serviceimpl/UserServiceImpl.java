@@ -36,40 +36,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-public ResponseEntity<ApiResponse> createUser(UserEntity user) {
-    Optional<UserEntity> existingUserByUsername = userRepository.findByUsername(user.getUsername());
-    if (existingUserByUsername.isPresent()) {
-        ApiResponse apiResponse = new ApiResponse(
-            "/users",
-            "User creation failed",
-            400,
-            "Username '" + user.getUsername() + "' is taken."
-        );
-        return ResponseEntity.status(400).body(apiResponse);
-    }
-    
-    Optional<UserEntity> existingUserByEmail = userRepository.findByEmail(user.getEmail());
-    if (existingUserByEmail.isPresent()) {
-        ApiResponse apiResponse = new ApiResponse(
-            "/users",
-            "User creation failed",
-            400,
-            "An account with email '" + user.getEmail() + "' already exists."
-        );
-        return ResponseEntity.status(400).body(apiResponse);
-    }
-
-    UserEntity savedUser = userRepository.save(user);
-    ApiResponse apiResponse = new ApiResponse(
-        "/users/" + savedUser.getUserId(),
-        "User created successfully",
-        201,
-        "User with name '"+ savedUser.getUsername() + "' and id '" + savedUser.getUserId() + "' created successfully."
-    );
-    return ResponseEntity.status(201).body(apiResponse);
-}
-
-    @Override
     public ResponseEntity<UserEntity> updateUser(Integer userId, UserEntity user) {
         return userRepository.findById(userId)
                 .map(existingUser -> {

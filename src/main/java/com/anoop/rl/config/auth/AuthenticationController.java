@@ -38,13 +38,16 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserEntity request){
-        
-        if (request.getUsername() == null || request.getUsername().isEmpty()) {
-            throw new IllegalArgumentException("Please enter Username!");
+        boolean un = request.getUsername() == null || request.getUsername().isEmpty();
+        boolean pw = request.getPassword() == null || request.getPassword().isEmpty();
+        if (un && pw) {
+            throw new IllegalArgumentException("Enter Username and Password");
         }
-
-        if (request.getPassword() == null || request.getPassword().isEmpty()) {
-            throw new IllegalArgumentException("Please enter Password!");
+        else if (un) {
+            throw new IllegalArgumentException("Enter Username");
+        }
+        else if (pw) {
+            throw new IllegalArgumentException("Enter Password");
         }
 
         Map<String, Object> response = authService.authenticate(request);

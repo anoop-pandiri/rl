@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.anoop.rl.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Data;
 import jakarta.validation.constraints.*;
@@ -19,6 +20,7 @@ import jakarta.validation.constraints.*;
 @Data
 @Entity
 @Table(name = "USERS")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserEntity implements UserDetails{
 
     @Id
@@ -39,7 +41,7 @@ public class UserEntity implements UserDetails{
     @Column(name="email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "phone", unique = true, nullable = true)
+    @Column(name = "phone", nullable = true)
     @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$", message = "Invalid phone number")
     private String phone;
 
@@ -65,7 +67,7 @@ public class UserEntity implements UserDetails{
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
     @Override
