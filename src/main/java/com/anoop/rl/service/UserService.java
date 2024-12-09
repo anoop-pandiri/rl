@@ -10,8 +10,8 @@ import java.util.Optional;
 
 public interface UserService {
     List<UserEntity> getAllUsers();
-    Optional<UserEntity> getUserById(Integer id);
+    Optional<UserEntity> getUserById(Long id);
     ResponseEntity<UserEntity> getUserByUsername(String username);
-    ResponseEntity<UserEntity> updateUser(Integer userId, UserEntity user);
-    ResponseEntity<ApiResponse> deleteUser(Integer userId);
+    ResponseEntity<UserEntity> updateUser(Long userId, UserEntity user);
+    ResponseEntity<ApiResponse> deleteUser(Long userId);
 }

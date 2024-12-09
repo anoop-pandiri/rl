@@ -26,7 +26,7 @@ public class UserEntity implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer userId;
+    private Long userId;
 
     @NotNull(message = "Username cannot be null")
     @Column(name = "username", unique = true, nullable = false)
