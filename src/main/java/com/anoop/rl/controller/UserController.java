@@ -72,7 +72,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@PathVariable("id") Integer userId, @RequestBody UserEntity user, Principal principal) {
+    public ResponseEntity<UserEntity> updateUser(@PathVariable("id") Long userId, @RequestBody UserEntity user, Principal principal) {
         ResponseEntity<UserEntity> responseEntity = userService.getUserByUsername(principal.getName());
         UserEntity loggedInUser = responseEntity.getBody();
         
@@ -84,7 +84,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteUser(@PathVariable("id") Integer userId, Principal principal) {
+    public ResponseEntity<ApiResponse> deleteUser(@PathVariable("id") Long userId, Principal principal) {
 
         ResponseEntity<UserEntity> responseEntity = userService.getUserByUsername(principal.getName());
         UserEntity loggedInUser = responseEntity.getBody();

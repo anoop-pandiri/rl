@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserEntity> getUserById(Integer id) {
+    public Optional<UserEntity> getUserById(Long id) {
         return userRepository.findById(id);
     }
 
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<UserEntity> updateUser(Integer userId, UserEntity user) {
+    public ResponseEntity<UserEntity> updateUser(Long userId, UserEntity user) {
         return userRepository.findById(userId)
                 .map(existingUser -> {
                     existingUser.setUsername(user.getUsername());
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<ApiResponse> deleteUser(Integer userId) {
+    public ResponseEntity<ApiResponse> deleteUser(Long userId) {
         Optional<UserEntity> userOptional = userRepository.findById(userId);
 
         if (userOptional.isPresent()) {
