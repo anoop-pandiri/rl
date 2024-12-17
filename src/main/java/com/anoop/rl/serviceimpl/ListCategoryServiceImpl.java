@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.anoop.rl.model.ListCategory;
+import com.anoop.rl.model.ListCategoryEntity;
 import com.anoop.rl.model.UserEntity;
 import com.anoop.rl.repository.ListCategoryRepository;
 import com.anoop.rl.repository.UserRepository;
@@ -22,7 +22,7 @@ public class ListCategoryServiceImpl implements ListCategoryService{
     
 
     @Override
-    public ListCategory create(Long userId, ListCategory listCategory) {
+    public ListCategoryEntity create(Long userId, ListCategoryEntity listCategory) {
         listCategory.setDateAdded(new Timestamp(System.currentTimeMillis()));
         Optional<UserEntity> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
@@ -35,13 +35,13 @@ public class ListCategoryServiceImpl implements ListCategoryService{
     }
 
     @Override
-    public Optional<ListCategory> findById(Long id) {
+    public Optional<ListCategoryEntity> findById(Long id) {
         return listCategoryRepository.findById(id);
     }
 
     @Override
-    public ListCategory updateById(Long id, ListCategory listCategory) {
-        listCategory.setLcId(id);
+    public ListCategoryEntity updateById(Long id, ListCategoryEntity listCategory) {
+        listCategory.setId(id);
         return listCategoryRepository.save(listCategory);
     }
 
@@ -51,7 +51,7 @@ public class ListCategoryServiceImpl implements ListCategoryService{
     }
 
     @Override
-    public List<ListCategory> findByUserId(Long userId) {
+    public List<ListCategoryEntity> findByUserId(Long userId) {
         return listCategoryRepository.findByUser_UserId(userId);
     }
 
@@ -66,7 +66,7 @@ public class ListCategoryServiceImpl implements ListCategoryService{
     }
 
     @Override
-    public List<ListCategory> findAll() {
+    public List<ListCategoryEntity> findAll() {
         return listCategoryRepository.findAll();
     }
 

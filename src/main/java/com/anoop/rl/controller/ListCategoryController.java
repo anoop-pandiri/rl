@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.anoop.rl.model.ListCategory;
+import com.anoop.rl.model.ListCategoryEntity;
 import com.anoop.rl.service.ListCategoryService;
 
 @RequestMapping("/list-categories")
@@ -24,11 +24,11 @@ public class ListCategoryController {
     private ListCategoryService listCategoryService;
 
     @PostMapping("/user/{userId}")
-    public ResponseEntity<ListCategory> createListCategory(
+    public ResponseEntity<ListCategoryEntity> createListCategory(
             @PathVariable Long userId,
-            @RequestBody ListCategory listCategory) {
+            @RequestBody ListCategoryEntity listCategory) {
         try {
-            ListCategory createdListCategory = listCategoryService.create(userId, listCategory);
+            ListCategoryEntity createdListCategory = listCategoryService.create(userId, listCategory);
             return new ResponseEntity<>(createdListCategory, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -36,19 +36,19 @@ public class ListCategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ListCategory> getListCategoryById(@PathVariable Long id) {
-        Optional<ListCategory> listCategory = listCategoryService.findById(id);
+    public ResponseEntity<ListCategoryEntity> getListCategoryById(@PathVariable Long id) {
+        Optional<ListCategoryEntity> listCategory = listCategoryService.findById(id);
         return listCategory
                 .map(category -> new ResponseEntity<>(category, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ListCategory> updateListCategoryById(
+    public ResponseEntity<ListCategoryEntity> updateListCategoryById(
             @PathVariable Long id,
-            @RequestBody ListCategory listCategory) {
+            @RequestBody ListCategoryEntity listCategory) {
         try {
-            ListCategory updatedListCategory = listCategoryService.updateById(id, listCategory);
+            ListCategoryEntity updatedListCategory = listCategoryService.updateById(id, listCategory);
             return new ResponseEntity<>(updatedListCategory, HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -62,8 +62,8 @@ public class ListCategoryController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ListCategory>> getListCategoriesByUserId(@PathVariable Long userId) {
-        List<ListCategory> listCategories = listCategoryService.findByUserId(userId);
+    public ResponseEntity<List<ListCategoryEntity>> getListCategoriesByUserId(@PathVariable Long userId) {
+        List<ListCategoryEntity> listCategories = listCategoryService.findByUserId(userId);
         return new ResponseEntity<>(listCategories, HttpStatus.OK);
     }
 
@@ -80,8 +80,8 @@ public class ListCategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ListCategory>> getAllListCategories() {
-        List<ListCategory> listCategories = listCategoryService.findAll();
+    public ResponseEntity<List<ListCategoryEntity>> getAllListCategories() {
+        List<ListCategoryEntity> listCategories = listCategoryService.findAll();
         return new ResponseEntity<>(listCategories, HttpStatus.OK);
     }
 

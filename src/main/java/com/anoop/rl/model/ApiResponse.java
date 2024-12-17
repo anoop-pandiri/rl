@@ -12,8 +12,8 @@ public class ApiResponse {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "response_id")
-    private Long responseId;
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "endpoint", nullable = false)
     private String endpoint;

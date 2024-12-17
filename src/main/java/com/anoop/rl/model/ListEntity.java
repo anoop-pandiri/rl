@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Data
 @Table(name = "LISTS", uniqueConstraints = {
@@ -33,5 +36,15 @@ public class ListEntity {
 
     @ManyToOne
     @JoinColumn(name = "listcategory_id_ref")
-    private ListCategory listCategory;
+    private ListCategoryEntity listCategory;
+
+    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ItemEntity> items = new HashSet<>();
+
+    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<TagEntity> tags = new HashSet<>();
+
+    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SortCriterionEntity> sortCriteria = new HashSet<>();
+    
 }
