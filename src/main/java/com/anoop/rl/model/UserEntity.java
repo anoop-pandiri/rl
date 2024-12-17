@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -63,6 +65,12 @@ public class UserEntity implements UserDetails{
 
     @Column(name = "last_login", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Timestamp lastLogin;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ListCategoryEntity> listCategories = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ListEntity> lists = new HashSet<>();
 
     @Override
     @JsonIgnore
