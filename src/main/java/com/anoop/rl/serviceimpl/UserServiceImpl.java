@@ -4,6 +4,9 @@ import com.anoop.rl.model.ApiResponse;
 import com.anoop.rl.model.UserEntity;
 import com.anoop.rl.repository.UserRepository;
 import com.anoop.rl.service.UserService;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -67,5 +70,50 @@ public class UserServiceImpl implements UserService {
                     "User with ID " + userId + " does not exist.");
             return ResponseEntity.status(404).body(apiResponse);
         }
+    }
+
+    @Override
+    public String exportUserData(Long userId) throws JsonProcessingException {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Use Jackson ObjectMapper to serialize the user data into JSON
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(user);
+    }
+
+    @Override
+    public void importUserData(String jsonData) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        // Deserialize JSON into User object
+        UserEntity user = mapper.readValue(jsonData, UserEntity.class);
+
+        // Save the user object and its entire hierarchy (thanks to cascading)
+        userRepository.save(user);
+    }
+
+    @Override
+    public String exportAllUsersData() throws JsonProcessingException {
+        List<UserEntity> allUsers = userRepository.findAll();
+        if (allUsers.isEmpty()) {
+            throw new RuntimeException("No users found to export");
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(allUsers);
+    }
+
+    @Override
+    public void importAllUsersData(String jsonData) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        // Parse the JSON string into a list of UserEntity objects
+        List<UserEntity> users = mapper.readValue(jsonData, mapper.getTypeFactory().constructCollectionType(List.class, UserEntity.class));
+
+        // Save all users to the database
+        userRepository.saveAll(users);
     }
 }

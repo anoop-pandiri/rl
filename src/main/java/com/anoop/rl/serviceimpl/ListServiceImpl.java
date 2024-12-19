@@ -66,6 +66,12 @@ public class ListServiceImpl implements ListService{
     }
 
     @Override
+    public void sortItems(ListEntity list) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'sortItems'");
+    }
+
+    @Override
     public List<ListEntity> findByUserId(Long userId) {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -80,24 +86,6 @@ public class ListServiceImpl implements ListService{
     @Override
     public void deleteByUserId(Long userId) {
         listRepository.deleteByUser_UserId((long)userId);
-    }
-
-    @Override
-    public void updatePositions() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updatePositions'");
-    }
-
-    @Override
-    public void importLists(List<ListEntity> lists) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'importLists'");
-    }
-
-    @Override
-    public void sortByPosition(List<ListEntity> listEntities) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sortByPosition'");
     }
 
     @Override

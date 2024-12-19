@@ -2,6 +2,7 @@ package com.anoop.rl.service;
 
 import com.anoop.rl.model.ApiResponse;
 import com.anoop.rl.model.UserEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.springframework.http.ResponseEntity;
 
@@ -14,4 +15,8 @@ public interface UserService {
     ResponseEntity<UserEntity> getUserByUsername(String username);
     ResponseEntity<UserEntity> updateUser(Long userId, UserEntity user);
     ResponseEntity<ApiResponse> deleteUser(Long userId);
+    String exportUserData(Long userId) throws JsonProcessingException;
+    void importUserData(String jsonData) throws JsonProcessingException;
+    String exportAllUsersData() throws JsonProcessingException;
+    void importAllUsersData(String jsonData) throws JsonProcessingException;
 }
