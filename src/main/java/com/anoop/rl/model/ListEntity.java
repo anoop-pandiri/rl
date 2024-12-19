@@ -17,7 +17,6 @@ public class ListEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "list_id")
     private Long id;
 
     @NotNull

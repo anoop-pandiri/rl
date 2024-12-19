@@ -16,7 +16,6 @@ public class ListCategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="listcategory_id")
     private Long id;
 
     @NotNull
