@@ -3,10 +3,12 @@ package com.anoop.rl.controller;
 import com.anoop.rl.model.ItemEntity;
 import com.anoop.rl.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -85,5 +87,18 @@ public class ItemController {
     public ResponseEntity<Void> deleteAllItems() {
         itemService.deleteAll();
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/bulk-sort")
+    public ResponseEntity<String> bulkSortItems(@RequestBody Map<Long, Integer> itemPositions) {
+        try {
+            itemService.bulkUpdateItemPositions(itemPositions);
+            return ResponseEntity.ok("Items sorted successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error while sorting items: " + e.getMessage());
+        }
     }
 }

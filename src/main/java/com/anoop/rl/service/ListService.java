@@ -17,11 +17,6 @@ public interface ListService {
     Long countByUserId(Long userId);
     void deleteByUserId(Long userId);
 
-    // Bulk Operations
-    void updatePositions();
-    void importLists(List<ListEntity> lists);
-    void sortByPosition(List<ListEntity> listEntities);
-
     // Admin/Mod Operations
     List<ListEntity> findAll();
     Long countAll();

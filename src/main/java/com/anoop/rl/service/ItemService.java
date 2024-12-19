@@ -2,6 +2,7 @@ package com.anoop.rl.service;
 
 import com.anoop.rl.model.ItemEntity;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface ItemService {
@@ -20,4 +21,6 @@ public interface ItemService {
     List<ItemEntity> findAll();
     Long countAll();
     void deleteAll();
+
+    void bulkUpdateItemPositions(Map<Long, Integer> itemPositions);
 }

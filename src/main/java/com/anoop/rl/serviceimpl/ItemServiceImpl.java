@@ -2,6 +2,7 @@ package com.anoop.rl.serviceimpl;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import com.anoop.rl.model.ListEntity;
 import com.anoop.rl.repository.ItemRepository;
 import com.anoop.rl.repository.ListRepository;
 import com.anoop.rl.service.ItemService;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class ItemServiceImpl implements ItemService{
@@ -87,6 +90,28 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public void deleteAll() {
         itemRepository.deleteAll();
+    }
+
+    @Transactional
+    @Override
+    public void bulkUpdateItemPositions(Map<Long, Integer> itemPositions) {
+        // Validate input data
+        if (itemPositions == null || itemPositions.isEmpty()) {
+            throw new IllegalArgumentException("Item positions map cannot be null or empty");
+        }
+
+        // Fetch all relevant items in one query
+        List<ItemEntity> items = itemRepository.findAllById(itemPositions.keySet());
+
+        // Update positions
+        items.forEach(item -> {
+            if (itemPositions.containsKey(item.getId())) {
+                item.setPosition(itemPositions.get(item.getId()));
+            }
+        });
+
+        // Save updated items in bulk
+        itemRepository.saveAll(items);
     }
     
 }

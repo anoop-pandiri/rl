@@ -43,8 +43,5 @@ public class ListEntity {
 
     @OneToMany(mappedBy = "list", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<TagEntity> tags = new HashSet<>();
-
-    @OneToMany(mappedBy = "list", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<SortCriterionEntity> sortCriteria = new HashSet<>();
     
 }

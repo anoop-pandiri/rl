@@ -83,24 +83,6 @@ public class ListServiceImpl implements ListService{
     }
 
     @Override
-    public void updatePositions() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updatePositions'");
-    }
-
-    @Override
-    public void importLists(List<ListEntity> lists) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'importLists'");
-    }
-
-    @Override
-    public void sortByPosition(List<ListEntity> listEntities) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sortByPosition'");
-    }
-
-    @Override
     public List<ListEntity> findAll() {
         return listRepository.findAll();
     }
