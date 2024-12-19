@@ -66,12 +66,6 @@ public class ListServiceImpl implements ListService{
     }
 
     @Override
-    public void sortItems(ListEntity list) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sortItems'");
-    }
-
-    @Override
     public List<ListEntity> findByUserId(Long userId) {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));

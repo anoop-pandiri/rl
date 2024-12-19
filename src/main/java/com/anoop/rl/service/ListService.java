@@ -12,8 +12,6 @@ public interface ListService {
     ListEntity updateById(Long listId, String name);
     void deleteById(Long listId);
 
-    void sortItems(ListEntity list);
-
     // User-Specific Operations
     List<ListEntity> findByUserId(Long userId);
     Long countByUserId(Long userId);
